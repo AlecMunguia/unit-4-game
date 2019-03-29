@@ -3,8 +3,12 @@ $(document).ready(function() {
 var counter = 0;
 var targetNumber = Math.round(Math.random() * (120 - 19)) + 19;
 var numberOptions = [10, 5, 3, 7];
-var wins = 0;
-var losses = 0;
+
+ // wins and losses
+ var wins = 0;
+ var losses = 0;
+ $("#score-wins").text(wins);
+ $("#score-losses").text(losses);
 
     //clicking the crystal
 $(".crystal-image").on("click", function() {
@@ -14,10 +18,6 @@ $(".crystal-image").on("click", function() {
     //setting the random target number
 $("#number-to-guess").text(targetNumber);
 
-    // wins and losses
-$("#wins").text(wins);
-$("#losses").text(losses);
-    
     //for loop to create crystals
 for (var i=0; i < numberOptions.length; i++) {
     var imageCrystal = $("<img>");
@@ -32,21 +32,19 @@ $(".crystal-image").on("click", function() {
     crystalValue = parseInt(crystalValue);
     counter += crystalValue;
     $("#your-score").text(counter);
-
+  
     //number matching logic
 if (counter == targetNumber) {
-    counter++;
-    wins++;
-    targetNumber == Math.round(Math.random() * (120 - 19)) + 19;
+    var wins = document.getElementById("score-wins");
+    wins + 1;
     alert("You're a Winner!");
 }
 else if (counter >= targetNumber) {
-    counter++;
-    losses++;
-    targetNumber == Math.round(Math.random() * (120 - 19)) + 19;
+    var losses = document.getElementById("score-losses");
+    losses + 1;
     alert("You're a Loser!");
 }
 })
 
-//end of doc
+
 });
