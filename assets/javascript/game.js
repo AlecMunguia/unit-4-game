@@ -19,15 +19,21 @@ $(".crystal-image").on("click", function() {
 $("#number-to-guess").text(targetNumber);
 
     //for loop to create crystals
-for (var i=0; i < numberOptions.length; i++) {
-    var imageCrystal = $("<img>");
-    imageCrystal.addClass("crystal-image");
-    imageCrystal.attr("src", "assets/images/crystal.png");
-    imageCrystal.attr("data-crystalvalue", numberOptions[i]);
-    $("#crystals").append(imageCrystal);
-}
+function createCrystals() {
+    $("#crystals").empty();
+    for (var i=0; i < 4; i++) {
+        var imageCrystal = $("<img>");
+        imageCrystal.addClass("crystal-image");
+        imageCrystal.attr("src", "assets/images/crystal.png");
+        imageCrystal.attr("data-crystalvalue", Math.floor(Math.random() * 12) + 1);
+        $("#crystals").append(imageCrystal);
+    }
+    }
+createCrystals()
+
     //applying click event to all crystals
-$(".crystal-image").on("click", function() {
+$("#crystals").on("click",".crystal-image", function() {
+    console.log("buttons-clicked");
     var crystalValue = ($(this).attr("data-crystalvalue"));
     crystalValue = parseInt(crystalValue);
     counter += crystalValue;
@@ -35,16 +41,25 @@ $(".crystal-image").on("click", function() {
   
     //number matching logic
 if (counter == targetNumber) {
-    var wins = document.getElementById("score-wins");
-    wins + 1;
-    alert("You're a Winner!");
+    wins++;
+    $("#score-wins").text(wins);
+    reset("You're a Winner!");
 }
 else if (counter >= targetNumber) {
-    var losses = document.getElementById("score-losses");
-    losses + 1;
-    alert("You're a Loser!");
+    losses++;
+    $("#score-losses").text(losses);
+    reset("You're a Loser!");
 }
 })
 
+    //reset
+    function reset (str) {
+        alert(str);
+        targetNumber = Math.round(Math.random() * (120 - 19)) + 19;
+        $("#number-to-guess").text(targetNumber);
+        counter = 0;
+        $("#your-score").text(counter);
+        createCrystals();
+    }
 
 });
